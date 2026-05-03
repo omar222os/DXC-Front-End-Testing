@@ -32,11 +32,16 @@ public class LoginTest extends BaseTest {
 
     @Test(priority = 1)
     public void TC01_verifySuccessfulLogin() {
+        // Wait for the form to be fully rendered before interacting
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.visibilityOfElementLocated(
+                        By.cssSelector("input[type='email']")
+                ));
+
         loginPage.setUsername("omar@gmail.com");
         loginPage.setPassword("Abc@123");
         loginPage.clickLoginButton();
 
-        // Wait for navigation away from /login, app redirects to /home
         loginPage.waitForLoginToComplete();
 
         Assert.assertTrue(

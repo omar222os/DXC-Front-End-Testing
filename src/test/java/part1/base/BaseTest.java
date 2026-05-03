@@ -1,7 +1,7 @@
 package part1.base;
-import Sprint1.*; // Imports BasePage, LoginPage, SignUpPage, ProfilePage
+
+import Sprint1.*;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.bidi.log.Log;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -11,7 +11,7 @@ public class BaseTest {
     protected BasePage basePage;
     protected LoginPage loginPage;
     protected SignUpPage signUpPage;
-    protected ProfilePage profilePage; // Declare ProfilePage
+    protected ProfilePage profilePage;
 
     private String url = "http://localhost:4200/login";
 
@@ -26,7 +26,7 @@ public class BaseTest {
 
         loginPage = new LoginPage();
         signUpPage = new SignUpPage();
-        profilePage = new ProfilePage(); // Initialize ProfilePage
+        profilePage = new ProfilePage();
     }
 
     @AfterClass

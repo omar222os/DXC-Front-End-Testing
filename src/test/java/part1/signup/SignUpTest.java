@@ -103,22 +103,35 @@ public class SignUpTest extends BaseTest {
         );
     }
 
-    // TC05 – Passwords do not match
+
+
     @Test(priority = 5)
-    public void TC05_verifyPasswordMismatchValidation() {
-        signUpPage.setFirstName("Jane");
-        signUpPage.setLastName("Smith");
-        signUpPage.setEmail("testuser99@email.com");
-        signUpPage.setPassword("ValidPass6!");
-        signUpPage.setConfirmPassword("DifferentPass6!"); // mismatch
+    public void TC04_verifyProfilePictureRejectsInvalidFileType() {
+        // Use a unique email to avoid false pass from "already registered" error
+        String uniqueEmail = "test12." + System.currentTimeMillis() + "@email.com";
+
+        signUpPage.setFirstName("John");
+        signUpPage.setLastName("Doe");
+        signUpPage.setEmail(uniqueEmail);
+        signUpPage.setPassword("ValidPass123!");
+        signUpPage.setConfirmPassword("ValidPass123!");
+
+        // Submit a non-image URL
+        signUpPage.setProfilePictureUrl("https://example.com/malicious_payload.exe");
         signUpPage.clickSignUp();
 
+        // Wait briefly for any error to appear or navigation to occur
+        try { Thread.sleep(2000); } catch (InterruptedException e) { e.printStackTrace(); }
+
+        // Assert that the app stayed on signup and showed an error
+        // THIS TEST IS EXPECTED TO FAIL — the app currently accepts any URL
+        // This documents a missing validation bug on the frontend
         Assert.assertTrue(
-                signUpPage.getConfirmPasswordError().contains("match"),
-                "Password mismatch validation was not shown."
+                driver.getCurrentUrl().contains("signup"),
+                "BUG: System accepted a non-image URL as a valid profile picture. " +
+                        "Expected file type validation but none exists."
         );
     }
-
     // TC06 – XSS sanitization
 //    @Test(priority = 6)
 //    public void TC06_verifySanitizationAgainstXSS() {

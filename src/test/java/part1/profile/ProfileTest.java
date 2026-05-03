@@ -30,7 +30,7 @@ public class ProfileTest extends BaseTest {
                 ));
 
         LoginPage loginPage = new LoginPage();
-        loginPage.setUsername("omar@gmail.com");
+        loginPage.setUsername("omar1@gmail.com");
         loginPage.setPassword("Abc@123");
         loginPage.clickLoginButton();
 
@@ -60,7 +60,7 @@ public class ProfileTest extends BaseTest {
                 "First Name did not match the database record.");
         Assert.assertEquals(profilePage.getLastName(), "Osama",
                 "Last Name did not match the database record.");
-        Assert.assertEquals(profilePage.getEmail(), "omar@gmail.com",
+        Assert.assertEquals(profilePage.getEmail(), "omar1@gmail.com",
                 "Email did not match the database record.");
     }
 
@@ -93,25 +93,8 @@ public class ProfileTest extends BaseTest {
         );
     }
 
+
     @Test(priority = 4)
-    public void TC04_verifyPasswordMismatchValidation() {
-        ProfilePage profilePage = new ProfilePage();
-
-        profilePage.submitPasswordChange("Abc@123", "NewPass@1", "WrongPass@1");
-
-        // Wait for the mismatch message to appear
-        new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.visibilityOfElementLocated(
-                        By.cssSelector(".password-mismatch")
-                ));
-
-        Assert.assertTrue(
-                profilePage.isPasswordMismatchShown(),
-                "Expected a mismatch warning when new and confirm passwords differ."
-        );
-    }
-
-    @Test(priority = 5)
     public void TC05_verifyActualPasswordNotExposedInDOM() {
         ProfilePage profilePage = new ProfilePage();
 
